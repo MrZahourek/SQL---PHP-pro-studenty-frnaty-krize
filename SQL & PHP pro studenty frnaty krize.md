@@ -123,6 +123,6 @@ For that we will use these commands
 - INSERT INTO (*columns*) - allows us to insert data into our tables. From now on we will call it creating rows. The argument in the brackets isn't 
 - VALUES (*values*) 
 
-![[Pasted image 20241217114336.png]]
 ==**DISABLE THIS FUCKER**==
 
+![Pasted image 20241217114336](https://github.com/user-attachments/assets/b69197d2-c696-4df9-ac5a-34e5fd534c8a)
