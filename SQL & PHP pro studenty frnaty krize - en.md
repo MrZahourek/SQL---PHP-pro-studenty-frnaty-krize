@@ -9,7 +9,6 @@
   - **READ ONLY** - a Boolean property of a database that, if set to 1, prevents alterations  
 - **SELECT** - selects specified data from a table  
 - **FROM** - a specifier for other commands, allowing us to address a specific table or database  
-- **WHERE** - a specifier for selecting data, acting similarly to an if statement  
 - **RENAME *keyword* TO** - renames tables, databases, and their columns; used together with the ALTER command  
 - **MODIFY** - used to change the datatype of a column and other properties of columns; used together with the ALTER command  
 - **ADD** - used together with ALTER to add a new column to a table  
@@ -19,13 +18,7 @@
 
 #### Basic and Common Variable Types:
 
-- **DECIMAL(size, d)** - used to create a decimal number. The size is a number specifying how long the number itself will be (e.g., 1.25 has a size of 3, 123.456 has a size of 6). The "d" argument specifies how many digits can be after the decimal point (e.g., **d = 2**, **size = 5**... 1.23 will work, 1234.3 will also work, but 12.345 won't).  
-
----
-
-### Comparison Operators for WHERE:
-
-Before moving forward, let's list all comparison operators that can be used with the WHERE clause.  
+- **DECIMAL(size, d)** - used to create a decimal number. The size is a number specifying how long the number itself will be (e.g., 1.25 has a size of 3, 123.456 has a size of 6). The "d" argument specifies how many digits can be after the decimal point (e.g., **d = 2**, **size = 5**... 1.23 will work, 1234.3 will also work, but 12.345 won't).   
 
 ---
 
@@ -167,5 +160,184 @@ To insert data into our tables, we use the following commands:
 
 - **INSERT INTO (*columns*)** - allows us to insert data into tables (we will now refer to this as "creating rows"). The argument in parentheses is optional.  
 - **VALUES (*values*)**  
+- **UPDATE** - updates information in rows, in this regard its similar to ALTER
+- **SET** - used with UPDATE command to add or replace data in a specific cell
+- DELETE
+- ROLLBACK
+- COMIT
+- **WHERE** - a specifier for selecting data, acting similarly to an if statement 
+- **ORDER BY** - used with the SELECT command, allows us to display the information in certain order, cam order alphabetically or numerically
+	- **DESC** - can be placed after the ORDER BY argument to achieve descending order
+	- **ASC** - can be placed after the ORDER BY argument to achieve ascending order
+- **NULL** - used for "deleting" information from a specific row
+- AUTOCOMMIT - 
 
 ---
+
+### Comparison Operators for WHERE:
+
+Before moving forward, let's list all comparison operators that can be used with the WHERE clause. 
+
+---
+*Note: to get in the same situation I'm in to have the same output as me use the following code*
+```sql
+CREATE DATABASE myDB;
+USE myDB;
+CREATE TABLE students (
+	studentID INT,
+	first_name VARCHAR(50),
+	last_name VARCHAR(50),
+	starting_year DATE,
+	class VARCHAR(5),
+	mark_average DECIMAL(3, 2)
+);
+
+SELECT * FROM students;
+```
+To add information to the table we are creating we will use INSERT INTO
+```sql
+INSERT INTO students
+VALUES (2, "antonin", "sonka", "2020-09-01", "3.C", 2.5);
+```
+
+To add only some information specify it in the brackets after the name of the database
+```sql
+INSERT INTO students(studentID, first_name, mark_average)
+VALUES (1, "vladimir", 1.2);
+```
+
+To add multiple values in one command do this
+```sql
+INSERT INTO students 
+VALUES  (3, "vojtech", "kotlik", "2020-09-01", "3.C", 2.7),
+		(4, "lucie", "zemanova", "2020-09-01", "3.C", 1.5);
+```
+
+Since we added the information that isn't in a proper order we can add the ORDER BY statement to the SELECT command, to order them by their studentID, or we can do that by name, average etc...
+```sql
+SELECT * FROM students
+ORDER BY studentID;
+```
+That will give us this output:
+
+| studentID | first_name | last_name | starting_year | class | mark_average |
+| --------- | ---------- | --------- | ------------- | ----- | ------------ |
+| 1         | vladimir   |           |               |       | 1.20         |
+| 2         | antonin    | sonka     | 2020-09-01    | 3.C   | 2.50         |
+| 3         | vojtech    | kotlik    | 2020-09-01    | 3.C   | 2.70         |
+| 4         | lucie      | zemanova  | 2020-09-01    | 3.C   | 1.50         |
+
+The student with ID of 1 has some missing data so we need to update it to not leave it empty. For that we will use UPDATE and SET command. To specify that the data we are changing we will use the where we want to change this information.
+```sql
+UPDATE students
+SET last_name = "shusharin",
+	starting_year = "2020-09-01",
+	class = "3.C"
+WHERE studentID = 1;
+```
+
+So now we have this output:
+
+| studentID | first_name | last_name | starting_year | class | mark_average |
+| --------- | ---------- | --------- | ------------- | ----- | ------------ |
+| 1         | vladimir   | shusharin | 2020-09-01    | 3.C   | 1.20         |
+| 2         | antonin    | sonka     | 2020-09-01    | 3.C   | 2.50         |
+| 3         | vojtech    | kotlik    | 2020-09-01    | 3.C   | 2.70         |
+| 4         | lucie      | zemanova  | 2020-09-01    | 3.C   | 1.50         |
+
+If we want to add and delete more data there is a possibility to make mistakes, for that we will use keyword AUTOCOMMIT and the commands COMIT and ROLLBACK. This will serve as sort of a undo and redo button. But first lets explain the AUTOCOMMIT.
+AUTOCOMMIT is a Boolean set to true by default, to set it to false we will use the SET command
+```sql
+SET AUTOCOMMIT = 0;
+```
+
+
+*i know there is stuff missing so far but this is actually important*
+
+### PHP and SQL together
+
+calling a database - i use xampp at home coz the school one didnt want to work and i was desperate
+```php
+#databse information  
+$db_server = "localhost";  #also can be 127.0.0.1:3306 sometimes
+$db_user = "root";  #users can be made in myPhpAdmin but i think this one is default  
+$db_pass = "";  # my root didnt require password, but i was using mySQL from XAMPP and its very much possible that school ones will have password
+$db_name = "users_db";  # this is a database i made in myPhpAdmin, but im too lazy to describe that (for now, coz its almost 5am)
+  
+#try to set up connection  
+try{  
+    $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);  
+}catch(mysqli_sql_exception $e){  
+    echo "connection failed coz $e";  
+}  
+  
+  
+#check connection  
+if($conn){  
+    echo "Connected successfully <br>";  
+}
+```
+
+to call SQL commands create a variable with the code and use *mysqli_querry(connection,command)* preferably in a try catch in case your SQL fucks up. You will manage the database with mySQL workbench (probably) and phpMyAdmin.
+```php
+$sql = "SELECT * FROM users";
+
+try {  
+    $result = mysqli_query($conn, $sql); #result is an object, that is important coz it defines how we work with it  
+    echo "Query successfully executed! <br>";  
+}  
+catch (mysqli_sql_exception) {  
+    echo "Couldn't execute query <br>";  
+}  
+#if we get an error our try block will catch it
+```
+
+in this code we can also use variables, i only had a problem when i used variable for a table, idk why. To use them do this.
+```php
+$userID = 5;
+
+$sql = "SELECT * FROM users WHERE id = '$userID'";
+#... rest is same
+```
+
+in the example im using SELECT but you can execute any command you have the permissions to do so (they are set based on your user)
+
+to get output from SELECT command we have to make the result into associative array. That is very similar to normal one but works like this
+
+	normal array: 1:"value 1", 2: "value 2"...
+	associative array: "word" => "value 1", "word2" => "value 2"...
+	*Yes the arrows are important* 
+
+this is because the "word" will represent the column that the data is stored in. To create this array from $result and print it out do this
+```php
+if (!strpos($sql, "SELECT") && mysqli_num_rows($result) > 0) {  
+    #$row = mysqli_fetch_assoc($result); #returs next available row in a associative array  
+    while ($row = mysqli_fetch_assoc($result)) {  
+        foreach ($row as $key => $value) {  
+            echo $key . ": " . $value . "<br>";  
+        } # so proud I'm learning here coz the while isn't mine but the foreach is  
+    }  
+}  
+else {  
+    echo "SQL output isn't printable <br>";  
+}
+```
+*Note: the if statement prevents the code outputing empty table, for that is the command mysqli_num_rows(output), that will return ammount of rows in output. The strpos(str, searchedStr) is basically just cool and i wanted to show it off.*
+
+you can see i used the mysqli_fetch_assoc(output) function, that will return the associative array. I also created the local variable $row in the while cycle, that serves two purposes. First is condition for while, because when row cant be created it will stop. Second is for the foreach cycle that just helps me write it down. Foreach will repeat for each element in array, in the brackets i used:
+
+	$row as $key => $value
+
+that can be translated to: "repeat for every key in row and in the value variable store element that comes after key"
+
+to do this in normal for loop you would write:
+```php
+for($i = 0, $i <= $row.lenght(), $i++) {
+	echo $row[i] . ": " . $row[i+1] . "<br>";
+	$i++;
+}
+```
+*i think... idk i didnt use php enough yet to know if there exist .lenght().*
+
+more here
+[https://www.w3schools.com/php/php_looping_foreach.asp]
