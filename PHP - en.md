@@ -41,7 +41,7 @@
 
 #### Selecting all data from a table:
 
-```sql
+```mysql
 SELECT * FROM users;
 ```
 
@@ -49,19 +49,19 @@ _Note: The_ `*` _selects all columns._
 
 #### Selecting specific columns:
 
-```sql
+```mysql
 SELECT username, post_amount, follower_count FROM users;
 ```
 
 #### Filtering results using `WHERE`:
 
-```sql
+```mysql
 SELECT username, post_amount, follower_count FROM users WHERE username = 'Rene';
 ```
 
 #### Searching with `LIKE` and ordering results:
 
-```sql
+```mysql
 SELECT 
     username, nickname, follower_amount
 FROM 
@@ -82,7 +82,7 @@ Joins combine rows from two or more tables based on related columns. Common type
 
 Returns rows where there is a match in both tables.
 
-```sql
+```mysql
 SELECT 
     a.id AS left_id, 
     a.name AS left_name, 
@@ -98,7 +98,7 @@ ON
 
 _Example use case: Match orders with their respective companies._
 
-```sql
+```mysql
 SELECT 
     orders.id AS order_id, 
     orders.name AS order_name, 
@@ -116,7 +116,7 @@ ON
 
 Returns all rows from the left table and matched rows from the right table. Unmatched rows from the right table will be `NULL`.
 
-```sql
+```mysql
 SELECT 
     a.id AS left_id, 
     b.name AS right_name
@@ -132,7 +132,7 @@ ON
 
 Returns all rows from the right table and matched rows from the left table. Unmatched rows from the left table will be `NULL`.
 
-```sql
+```mysql
 SELECT 
     a.id AS left_id, 
     b.name AS right_name
@@ -148,7 +148,7 @@ ON
 
 Returns all rows when there is a match in either table. Unmatched rows will have `NULL` values.
 
-```sql
+```mysql
 SELECT 
     a.id AS left_id, 
     b.name AS right_name
@@ -166,7 +166,7 @@ ON
 
 - Use **AS** to create aliases for tables or columns for better readability.
 
-    ```sql
+    ```mysql
     SELECT 
         a.id AS left_id, 
         b.id AS right_id
@@ -214,7 +214,7 @@ $correctUsername = false;
 // "unpack" the result as a associative array
 
 while($row = mysqli_fetch_assoc($result)) { // so if there are no rows the while ends
-	foreach($row as $key => $value) { // this will go throught the array element by element (how cool)
+	foreach($row as $key => $value) { // this will go through the array element by element (how cool)
 		if($key == "username" && $value == $username) { // if the key will be username (first repeat) and matches the user input set the check to true
 			$correctUsername = true;
 		}
@@ -274,7 +274,7 @@ catch(mysqli_sql_exception) {
 
 Before we truly start, let me just quickly show you how to make a database, use it to create a table and fill that table with some values. After that I will go a bit deeper into it but this is just a quick course if you don't want to scroll too far.
 
-```sql
+```mysql
 CREATE DATABASE database_name; -- create a database
 
 USE database_name; -- choose it as a "active repository" for our work
@@ -316,3 +316,26 @@ So the actual first chapter of data creation:
     - **JSON** - will store JSON data so the data has to be in JSON format(`{'key': 'value', 'key2': ['value2', 'value3'] ...} `)
     - **ENUM** - acts as a list of possible values in the column, used when exact values are required `ENUM (ver1, ver2, ver3, ...)`
 
+Now when we have commands, lets start with the actual database creation. As I said before, the database will actually just contain our databases (I don't think i will ever start to talk about permissions and users here so lets stick with that).
+To make a database use CREATE command together with the DATABASE keyword followed by the name of the database itself. If you wish to use this database follow this line with the USE command with the database name as its argument.
+```mysql
+CREATE DATABASE database_name;
+USE database_name;
+```
+If you wish to delete this database use the DROP command.
+```mysql
+DROP DATABASE database_name;
+```
+
+Same process will be followed for creating and deleting tables. But with special addition for creating tables.
+```mysql
+CREATE TABLE table_name (
+    column_one INT,
+    column_two VARCHAR(45),
+    column_three JSON
+    -- etc...
+);
+
+DROP TABLE table_name;
+```
+So to kinda explain what i did there. After the commands I defined the columns for our new table.
