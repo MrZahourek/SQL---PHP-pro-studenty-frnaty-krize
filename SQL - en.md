@@ -296,25 +296,33 @@ SELECT * FROM table_name; -- select all data from the table
 So the actual first chapter of data creation:
 
 - **CREATE** - command used for creating databases and tables
-	- **DATABASE** - storage for our tables
-	- **TABLE** - storage for the actual values in our databases
-
+    - **DATABASE** - storage for our tables
+    - **TABLE** - storage for the actual values in our databases
+- **PRIMARY KEY** - 
+- **FOREIGN KEY** -
+- **
+- **NOT NULL** -
+- **UNIQUE** -
+- 
 - **USE** - this command will select the "active repository", basically until we choose what database are we working in we cant make and fill tables
 - **DROP** - used for deleting stuff (by stuff I mean a lot of things so it will remain stuff until I get to it)
-- **VALUES**
-	- **VARCHAR** - used to store string values, pay attention to the fact that if we put a number here it won't be a number, or have its values, just a symbol for it (this is important for the `WHERE` command)
-	- **TEXT** - for bigger and only text values, I never understood what's the difference between this and `VARCHAR` but my bet is on maximum size
-	- **BLOB** - for big values, sounds weird but together with `BIGBLOB` can store stuff like pictures, audio maybe even video
-	- **INT** - stores numerical values, but not decimal values (works the same as the one we know from programming)
-	- **BIGINT** - stores very big numbers (so if your number doesn't work try this one)
-	- **DECIMAL** - stores decimal values, to be specific, exact decimal values, because the first number decides the full length of the number (amount of numbers, not maximum size) and second argument will set a limit of the numbers after the decimal point `DECIMAL (4, 2)` can do number (12.34 but not 123.4)
-	- **FLOAT/DOUBLE** - unlike DECIMAL these two store undefined decimal numbers, in brackets we only specify the complete size of the number
-	- **DATE** - stores only date `YYYY-MM-DD`
-	- **DATETIME** - stores time and date `YYYY-MM-DD HH:MM:SS`, the CURRENT_TIMESTAMP will fill it up automatically with current timestamp (that being the time of adding that value to the table)
-	- **TIME** - stores only time in format `HH:MM:SS`
-	- **BOOL/BOOLEAN** - sets the column to store only Boolean values
-	- **JSON** - will store JSON data so the data has to be in JSON format(`{'key': 'value', 'key2': ['value2', 'value3'] ...} `)
-	- **ENUM** - acts as a list of possible values in the column, used when exact values are required `ENUM (ver1, ver2, ver3, ...)`
+- **DELETE** -
+- **ADD** -
+- **INSERT INTO** -
+- **VALUES** - 
+    - **VARCHAR** - used to store string values, pay attention to the fact that if we put a number here it won't be a number, or have its values, just a symbol for it (this is important for the `WHERE` command)
+    - **TEXT** - for bigger and only text values, I never understood what's the difference between this and `VARCHAR` but my bet is on maximum size
+    - **BLOB** - for big values, sounds weird but together with `BIGBLOB` can store stuff like pictures, audio maybe even video
+    - **INT** - stores numerical values, but not decimal values (works the same as the one we know from programming)
+    - **BIGINT** - stores very big numbers (so if your number doesn't work try this one)
+    - **DECIMAL** - stores decimal values, to be specific, exact decimal values, because the first number decides the full length of the number (amount of numbers, not maximum size) and second argument will set a limit of the numbers after the decimal point `DECIMAL (4, 2)` can do number (12.34 but not 123.4)
+    - **FLOAT/DOUBLE** - unlike DECIMAL these two store undefined decimal numbers, in brackets we only specify the complete size of the number
+    - **DATE** - stores only date `YYYY-MM-DD`
+    - **DATETIME** - stores time and date `YYYY-MM-DD HH:MM:SS`, the CURRENT_TIMESTAMP will fill it up automatically with current timestamp (that being the time of adding that value to the table)
+    - **TIME** - stores only time in format `HH:MM:SS`
+    - **BOOL/BOOLEAN** - sets the column to store only Boolean values
+    - **JSON** - will store JSON data so the data has to be in JSON format(`{'key': 'value', 'key2': ['value2', 'value3'] ...} `)
+    - **ENUM** - acts as a list of possible values in the column, used when exact values are required `ENUM (ver1, ver2, ver3, ...)`
 
 Now when we have commands, lets start with the actual database creation. As I said before, the database will actually just contain our databases (I don't think i will ever start to talk about permissions and users here so lets stick with that).
 To make a database use CREATE command together with the DATABASE keyword followed by the name of the database itself. If you wish to use this database follow this line with the USE command with the database name as its argument.
