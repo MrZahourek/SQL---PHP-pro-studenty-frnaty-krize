@@ -300,7 +300,7 @@ So the actual first chapter of data creation:
     - **TABLE** - storage for the actual values in our databases
 - **PRIMARY KEY** - 
 - **FOREIGN KEY** -
-- **
+- **h
 - **NOT NULL** -
 - **UNIQUE** -
 - 
